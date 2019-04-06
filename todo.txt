@@ -1,0 +1,25 @@
+Pages
+  App
+
+Components
+  SelectedStudent
+    - Pick a Student button
+    - Display the selected student name
+    - state: { students: [], selectedStudent: "" }
+
+  StudentList
+    - Holds ul that holids li students
+    - state: { almostSelectedStudent: "" }
+
+  AddStudent / EditStudent / DeleteStudent 
+    - Mark as absent
+
+Routes
+  GET /api/students
+  - Returns everything from the students table
+
+Database
+  students table
+   - selected_count: integer
+   - student: string
+   - absent: bool

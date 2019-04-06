@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <title>Document</title>
+  <style>
+    .almost_selected {
+      color: blue;
+    }
+
+    li {
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Selected student:</h5>
+        <p class="card-text">
+          <h1 id="selected_student"></h1>
+        </p>
+        <button id="random_button" class="btn btn-primary">Pick a Student</button>
+      </div>
+    </div>
+
+    <ul id="student_list">
+    </ul>
+  </div>
+
+  <script>
+    var students = [
+      "Aiman",
+      "Christina",
+      "Charlotte",
+      "Dre",
+      "Federico",
+      "Freddy",
+      "Kevin",
+      "Keyanna",
+      "Sachiko",
+    ];
+
+    for (var t = 0; t < students.length; t++) {
+      var newRow = $("<li>");
+      newRow.text(students[t]);
+
+      newRow.attr('data-name', students[t]);
+      newRow.attr('data-id', t);
+      newRow.attr('id', 'student-' + t);
+
+      $("#student_list").append(newRow);
+    }
+
+    var lastSelectedStudent = -1;
+    var odds;
+    $("#random_button").on("click", function () {
+      $("#selected_student").text("");
+
+      odds = 10;
+      almostSelect();
+    })
+
+    function almostSelect() {
+      if (odds > 7) {
+        odds--;
+      }
+
+      $(".almost_selected").removeClass("almost_selected");
+
+      var randomNum = getNextRandom();
+      $("#student-" + randomNum).addClass("almost_selected");
+
+      setTimeout(function () {
+        if (Math.floor(Math.random() * odds) == 0) {
+          actuallySelect(randomNum);
+        } else {
+          almostSelect();
+        }
+      }, Math.random() * 400 + 200);
+
+    }
+
+    function getNextRandom() {
+      var randomNum = Math.floor(Math.random() * students.length);
+
+      // If it does equal the last random num then roll again
+      while (lastSelectedStudent == randomNum) {
+        // Choose a student at random
+        randomNum = Math.floor(Math.random() * students.length);
+      }
+
+      return randomNum;
+    }
+
+    function actuallySelect(studentId) {
+      $(".almost_selected").removeClass("almost_selected");
+
+      // Display the student
+      $("#selected_student").text(students[studentId]);
+
+      lastSelectedStudent = studentId;
+    }
+  </script>
+</body>
+
+</html>
