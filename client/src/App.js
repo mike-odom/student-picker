@@ -4,25 +4,26 @@ import SelectedStudent from "./components/SelectedStudent";
 import StudentList from "./components/StudentList";
 import logo from "./logo.svg";
 import "./App.css";
-
-// Some data for now
-const students = [
-  "Aiman",
-  "Christina",
-  "Charlotte",
-  "Dre",
-  "Federico",
-  "Freddy",
-  "Kevin",
-  "Keyanna",
-  "Sachiko",
-];
-
+import axios from "axios";
 /**
  * The main App component that holds our whole React app
  */
 class App extends Component {
-  state = { students: students };
+  state = { students: [] };
+
+  componentDidMount() {
+    axios.get("/api/students").then(response => {
+      console.log(response.data);
+
+      this.processStudents(response.data);
+    })
+  }
+
+  processStudents(students) {
+    let studentsArr = students.map(studentObj => studentObj.student);
+
+    this.setState({ students: studentsArr });
+  }
 
   render() {
     return (
