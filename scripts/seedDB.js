@@ -32,10 +32,38 @@ const motivationSeed = [
   }
 ];
 
+const students = [
+  "Aiman",
+  "Christina",
+  "Charlotte",
+  "Dre",
+  "Federico",
+  "Freddy",
+  "Kevin",
+  "Keyanna",
+  "Sachiko",
+];
+
 db.sequelize.sync({ force: true }).then(function() {
+
   db.MotivationalQuotes.destroy({
     where: {},
     truncate: true
   })
   .then(() => db.MotivationalQuotes.bulkCreate(motivationSeed));
+
+  db.Students.destroy({
+    where: {},
+    truncate: true
+  })
+  .then(() => {
+    students.map(student => {
+      db.Students.create({ 
+        student: student,
+        selected_count: 0,
+        absent: false
+      })
+    })
+  });
+
 });
