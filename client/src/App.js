@@ -13,13 +13,13 @@ class App extends Component {
 
   componentDidMount() {
     axios.get("/api/students").then(response => {
-      console.log(response.data);
-
       this.processStudents(response.data);
     })
   }
 
   processStudents(students) {
+    // Students comes back as an array of objects, put them in array of strings
+    
     let studentsArr = students.map(studentObj => studentObj.student);
 
     this.setState({ students: studentsArr });

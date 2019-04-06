@@ -7,7 +7,7 @@ export default class StudentList extends React.Component {
     return (
       <div>
         <ul>
-          {this.props.students.map(student => <li>{student}</li>)}
+          {this.props.students.map(student => <li key={student}>{student}</li>)}
         </ul>
       </div>
     );
